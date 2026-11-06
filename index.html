@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Employee Leave Management System</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f1f5f9;
+    color: #1e293b;
+}
+
+header {
+    background: #1e3a8a;
+    color: white;
+    padding: 22px;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 27px;
+}
+
+header p {
+    margin-top: 8px;
+    color: #dbeafe;
+}
+
+.container {
+    width: 90%;
+    max-width: 1100px;
+    margin: 30px auto;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    margin-bottom: 25px;
+}
+
+h2 {
+    color: #1e3a8a;
+    margin-bottom: 20px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+input, textarea {
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 7px;
+    outline: none;
+    font-size: 15px;
+}
+
+input:focus, textarea:focus {
+    border-color: #2563eb;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 90px;
+}
+
+.full {
+    grid-column: 1 / 3;
+}
+
+button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.submit-btn {
+    background: #2563eb;
+    color: white;
+    margin-top: 20px;
+}
+
+.submit-btn:hover {
+    background: #1e40af;
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 700px;
+}
+
+th, td {
+    padding: 13px;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+th {
+    background: #1e3a8a;
+    color: white;
+}
+
+tr:hover {
+    background: #f8fafc;
+}
+
+.delete-btn {
+    background: #dc2626;
+    color: white;
+    padding: 8px 12px;
+}
+
+.empty {
+    text-align: center;
+    padding: 20px;
+    color: #64748b;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.stat-box {
+    background: white;
+    padding: 20px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+}
+
+.stat-box h3 {
+    color: #64748b;
+    font-size: 15px;
+}
+
+.stat-box p {
+    font-size: 27px;
+    color: #2563eb;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+footer {
+    background: #1e3a8a;
+    color: white;
+    padding: 18px;
+    text-align: center;
+    margin-top: 30px;
+}
+
+@media(max-width: 650px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .full {
+        grid-column: 1;
+    }
+
+    .stats {
+        grid-template-columns: 1fr;
+    }
+
+    header h1 {
+        font-size: 21px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>Employee Leave Management System</h1>
+    <p>Employee Leave Application Portal</p>
+</header>
+
+<div class="container">
+
+    <div class="stats">
+        <div class="stat-box">
+            <h3>Total Applications</h3>
+            <p id="total">0</p>
+        </div>
+
+        <div class="stat-box">
+            <h3>Total Employees</h3>
+            <p id="employees">0</p>
+        </div>
+
+        <div class="stat-box">
+            <h3>Total Leave Days</h3>
+            <p id="days">0</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Apply For Leave</h2>
+
+        <form id="leaveForm">
+
+            <div class="form-grid">
+
+                <div class="input-group">
+                    <label>Employee ID</label>
+                    <input type="text" id="empid"
+                    placeholder="Enter Employee ID" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Employee Name</label>
+                    <input type="text" id="name"
+                    placeholder="Enter Your Name" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Email Address</label>
+                    <input type="email" id="email"
+                    placeholder="Enter Your Email" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Leave Date</label>
+                    <input type="date" id="leaveDate" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Number Of Days</label>
+                    <input type="number" id="noDays"
+                    min="1" placeholder="Enter Number Of Days" required>
+                </div>
+
+                <div class="input-group full">
+                    <label>Description / Leave Reason</label>
+                    <textarea id="description"
+                    placeholder="Enter Leave Reason" required></textarea>
+                </div>
+
+            </div>
+
+            <button type="submit" class="submit-btn">
+                Submit Leave Request
+            </button>
+
+        </form>
+    </div>
+
+    <div class="card">
+        <h2>Employee Leave Details</h2>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Employee ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Leave Date</th>
+                        <th>No. Of Days</th>
+                        <th>Description</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody id="leaveTable">
+                </tbody>
+            </table>
+        </div>
+
+        <p id="emptyMessage" class="empty">
+            No Leave Applications Found
+        </p>
+
+    </div>
+
+</div>
+
+<footer>
+    <p>Employee Leave Management System | Mini Project</p>
+</footer>
+
+<script>
+
+let leaves = JSON.parse(localStorage.getItem("leaves")) || [];
+
+const form = document.getElementById("leaveForm");
+
+form.addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+    const employee = {
+        empid: document.getElementById("empid").value.trim(),
+        name: document.getElementById("name").value.trim(),
+        email: document.getElementById("email").value.trim(),
+        date: document.getElementById("leaveDate").value,
+        days: Number(document.getElementById("noDays").value),
+        description: document.getElementById("description").value.trim()
+    };
+
+    if (employee.days < 1) {
+        alert("Please enter a valid number of leave days.");
+        return;
+    }
+
+    const existing = leaves.some(
+        item => item.empid === employee.empid &&
+                item.date === employee.date
+    );
+
+    if (existing) {
+        alert("Leave application already exists for this employee and date.");
+        return;
+    }
+
+    leaves.push(employee);
+
+    localStorage.setItem("leaves", JSON.stringify(leaves));
+
+    alert("Leave Application Submitted Successfully!");
+
+    form.reset();
+
+    displayLeaves();
+
+});
+
+function displayLeaves() {
+
+    const table = document.getElementById("leaveTable");
+
+    table.innerHTML = "";
+
+    let totalDays = 0;
+
+    const employeeIds = new Set();
+
+    leaves.forEach((item, index) => {
+
+        totalDays += item.days;
+        employeeIds.add(item.empid);
+
+        const row = document.createElement("tr");
+
+        [
+            item.empid,
+            item.name,
+            item.email,
+            item.date,
+            item.days,
+            item.description
+        ].forEach(value => {
+            const cell = document.createElement("td");
+            cell.textContent = value;
+            row.appendChild(cell);
+        });
+
+        const actionCell = document.createElement("td");
+
+        const deleteButton = document.createElement("button");
+
+        deleteButton.textContent = "Delete";
+        deleteButton.className = "delete-btn";
+
+        deleteButton.addEventListener("click", function() {
+            if (confirm("Are you sure you want to delete this application?")) {
+                leaves.splice(index, 1);
+                localStorage.setItem("leaves", JSON.stringify(leaves));
+                displayLeaves();
+            }
+        });
+
+        actionCell.appendChild(deleteButton);
+        row.appendChild(actionCell);
+
+        table.appendChild(row);
+
+    });
+
+    document.getElementById("total").textContent = leaves.length;
+
+    document.getElementById("employees").textContent =
+        employeeIds.size;
+
+    document.getElementById("days").textContent = totalDays;
+
+    document.getElementById("emptyMessage").style.display =
+        leaves.length === 0 ? "block" : "none";
+
+}
+
+displayLeaves();
+
+</script>
+
+</body>
+</html>
